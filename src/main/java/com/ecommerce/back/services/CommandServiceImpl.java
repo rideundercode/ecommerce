@@ -16,19 +16,16 @@ import java.util.stream.Collectors;
 
 @Service
 @AllArgsConstructor
-@NoArgsConstructor
 public class CommandServiceImpl implements CommandService {
-    @Autowired
     private CommandRepository commandRepository;
 
-    @Autowired
     private CommandMapperImpl commandMapper;
 
     @Override
     public CommandDTO createCommand(CommandDTO commandDTO) {
         Command command = commandMapper.fromCommandDTO(commandDTO);
         Command commandSaved = commandRepository.save(command);
-        return commandMapper.fromCommand(command);
+        return commandMapper.fromCommand(commandSaved);
     }
 
     @Override
@@ -59,6 +56,6 @@ public class CommandServiceImpl implements CommandService {
     public void deletedCommand(String idCommand) {
         commandRepository.deleteById(idCommand);
     }
-    
+
 
 }

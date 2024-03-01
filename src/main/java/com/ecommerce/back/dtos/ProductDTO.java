@@ -1,7 +1,6 @@
 package com.ecommerce.back.dtos;
 
 import lombok.Data;
-
 import java.util.Date;
 
 @Data

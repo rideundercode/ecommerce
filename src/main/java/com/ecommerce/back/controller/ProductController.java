@@ -5,6 +5,9 @@ import com.ecommerce.back.dtos.ProductDTO;
 import com.ecommerce.back.repositories.ProductRepository;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -15,26 +18,30 @@ import java.util.List;
 @Slf4j
 public class ProductController {
 
-    private ProductService productService;
-    private ProductRepository productRepository;
+    private final ProductService productService;
 
     @PostMapping("/")
-    public ProductDTO createProduct(@RequestBody ProductDTO productDTO){
-        return productService.createProduct(productDTO);
+    public ResponseEntity<ProductDTO> createProduct(@RequestBody ProductDTO productDTO){
+        ProductDTO createdProduct = productService.createProduct(productDTO);
+        return new ResponseEntity<>(createdProduct, HttpStatus.CREATED);
     }
 
     @GetMapping("/{id}")
-    public ProductDTO getProductDTO(@PathVariable(name = "id") String idProduct) throws ProductNotFoundException {
-        return productService.getProductDTOById(idProduct);
+    public ResponseEntity<ProductDTO> getProduct(@PathVariable String id) throws ProductNotFoundException {
+        ProductDTO productDTO = productService.getProductDTOById(id);
+        return ResponseEntity.ok(productDTO);
     }
 
     @GetMapping("/")
-    public List<ProductDTO> getAllProducts(){
-        return productService.getAllProducts();
+    public ResponseEntity<List<ProductDTO>> getAllProducts(){
+        List<ProductDTO> products = productService.getAllProducts();
+        return ResponseEntity.ok(products);
     }
 
     @DeleteMapping("/{id}")
-    public void  deletedcustomerById(@PathVariable(name ="id") String idCustomer){
-        productService.deletedProductById(idCustomer);
+    public ResponseEntity<Void> deleteProduct(@PathVariable String id){
+        productService.deletedProductById(id);
+        return ResponseEntity.noContent().build();
     }
 }
+

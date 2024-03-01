@@ -5,6 +5,7 @@ import com.ecommerce.back.entities.Product;
 import com.ecommerce.back.exceptions.ProductNotFoundException;
 import com.ecommerce.back.mappers.ProductMapperImpl;
 import com.ecommerce.back.repositories.ProductRepository;
+import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -13,12 +14,11 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
+@AllArgsConstructor
 public class ProductServiceImpl implements ProductService {
 
-    @Autowired
     private ProductRepository productRepository;
 
-    @Autowired
     private ProductMapperImpl productMapper;
 
     @Override

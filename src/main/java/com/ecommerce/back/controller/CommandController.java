@@ -6,6 +6,8 @@ import com.ecommerce.back.exceptions.CommandNotFoundException;
 import com.ecommerce.back.services.CommandService;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -16,27 +18,29 @@ import java.util.List;
 @Slf4j
 public class CommandController {
 
-    private CommandService commandService;
+    private final CommandService commandService;
+
     @PostMapping("/")
-    public CommandDTO createCommand(@RequestBody CommandDTO commandDTO){
-        return commandService.createCommand(commandDTO);
+    public ResponseEntity<CommandDTO> createCommand(@RequestBody CommandDTO commandDTO){
+        CommandDTO createdCommand = commandService.createCommand(commandDTO);
+        return new ResponseEntity<>(createdCommand, HttpStatus.CREATED);
     }
 
     @GetMapping("/{id}")
-    public CommandDTO getCommand(@PathVariable(name = "id") String idProduct) throws CommandNotFoundException {
-        return commandService.getCommand(idProduct);
+    public ResponseEntity<CommandDTO> getCommand(@PathVariable String id) throws CommandNotFoundException {
+        CommandDTO commandDTO = commandService.getCommand(id);
+        return ResponseEntity.ok(commandDTO);
     }
 
     @GetMapping("/")
-    public List<CommandDTO> getAllCommands(){
-        return commandService.getAllCommands();
+    public ResponseEntity<List<CommandDTO>> getAllCommands(){
+        List<CommandDTO> commands = commandService.getAllCommands();
+        return ResponseEntity.ok(commands);
     }
 
     @DeleteMapping("/{id}")
-    public void  deletedCommand(@PathVariable(name ="id") String idCommand){
-        commandService.deletedCommand(idCommand);
+    public ResponseEntity<Void> deleteCommand(@PathVariable String id){
+        commandService.deletedCommand(id);
+        return ResponseEntity.noContent().build();
     }
-
-
-
 }
