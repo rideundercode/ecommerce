@@ -17,6 +17,7 @@ import java.util.List;
 @NoArgsConstructor
 public class Command {
    @Id
+   @GeneratedValue(strategy = GenerationType.UUID)
    private String idCommand;
 
    private Date dateCreationCommand;

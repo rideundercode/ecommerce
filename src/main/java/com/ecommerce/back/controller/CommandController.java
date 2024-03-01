@@ -1,9 +1,9 @@
 package com.ecommerce.back.controller;
 
 import com.ecommerce.back.dtos.CommandDTO;
-import com.ecommerce.back.entities.Command;
 import com.ecommerce.back.exceptions.CommandNotFoundException;
 import com.ecommerce.back.services.CommandService;
+import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -21,7 +21,7 @@ public class CommandController {
     private final CommandService commandService;
 
     @PostMapping("/")
-    public ResponseEntity<CommandDTO> createCommand(@RequestBody CommandDTO commandDTO){
+    public ResponseEntity<CommandDTO> createCommand(@Valid @RequestBody CommandDTO commandDTO){
         CommandDTO createdCommand = commandService.createCommand(commandDTO);
         return new ResponseEntity<>(createdCommand, HttpStatus.CREATED);
     }

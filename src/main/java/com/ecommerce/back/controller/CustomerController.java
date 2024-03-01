@@ -1,12 +1,11 @@
 package com.ecommerce.back.controller;
 
 import com.ecommerce.back.dtos.CustomerDTO;
-import com.ecommerce.back.dtos.ProductDTO;
 import com.ecommerce.back.exceptions.CustomerNotFoundException;
 import com.ecommerce.back.services.CustomerService  ;
+import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -22,7 +21,7 @@ public class CustomerController {
     private final CustomerService customerService;
 
     @PostMapping("/")
-    public ResponseEntity<CustomerDTO> createCustomer(@RequestBody CustomerDTO customerDTO){
+    public ResponseEntity<CustomerDTO> createCustomer(@Valid @RequestBody CustomerDTO customerDTO){
         CustomerDTO createdCustomer = customerService.createCustomerDTO(customerDTO);
         return new ResponseEntity<>(createdCustomer, HttpStatus.CREATED);
     }

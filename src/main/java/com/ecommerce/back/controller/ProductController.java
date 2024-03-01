@@ -2,10 +2,9 @@ package com.ecommerce.back.controller;
 import com.ecommerce.back.exceptions.ProductNotFoundException;
 import com.ecommerce.back.services.ProductService;
 import com.ecommerce.back.dtos.ProductDTO;
-import com.ecommerce.back.repositories.ProductRepository;
+import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -21,7 +20,7 @@ public class ProductController {
     private final ProductService productService;
 
     @PostMapping("/")
-    public ResponseEntity<ProductDTO> createProduct(@RequestBody ProductDTO productDTO){
+    public ResponseEntity<ProductDTO> createProduct(@Valid @RequestBody ProductDTO productDTO){
         ProductDTO createdProduct = productService.createProduct(productDTO);
         return new ResponseEntity<>(createdProduct, HttpStatus.CREATED);
     }

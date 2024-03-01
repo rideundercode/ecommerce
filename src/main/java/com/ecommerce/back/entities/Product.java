@@ -1,9 +1,6 @@
 package com.ecommerce.back.entities;
 
-import jakarta.persistence.CascadeType;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.ManyToMany;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -18,6 +15,7 @@ import java.util.List;
 @NoArgsConstructor
 public class Product {
     @Id
+    @GeneratedValue(strategy = GenerationType.UUID)
     private String idProduct;
 
     private String name;
